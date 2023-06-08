@@ -1,10 +1,6 @@
-import ControlButton from './components/ControlButton';
-import Counter from './components/Counter';
-import Logo from './components/Logo';
-import Timer from './components/Timer';
+import { ControlButton, Counter, Logo, Timer } from './components';
 import { DEFAULT_COUNTDOWN_MILLISECONDS, GOAL_LIMIT, ROUND_LIMIT } from './constants';
-import useCountdown from './hooks/useCountdown';
-import useCounter from './hooks/useCounter';
+import { useCountdown, useCounter } from './hooks';
 
 function App() {
   const { count: goalCount, increment: goalIncrement } = useCounter(GOAL_LIMIT);
