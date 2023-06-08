@@ -1,9 +1,16 @@
+import { convertMillisecondsToMinutesAndSeconds } from '../../utils';
 import TimerNumber from './TimerNumber';
 
-function Timer() {
+interface Props {
+  remainedMilliseconds: number;
+}
+
+function Timer({ remainedMilliseconds }: Props) {
+  const { minutes, seconds } = convertMillisecondsToMinutesAndSeconds(remainedMilliseconds);
+
   return (
     <>
-      <TimerNumber />:<TimerNumber />
+      <TimerNumber value={minutes} />:<TimerNumber value={seconds} />
     </>
   );
 }
