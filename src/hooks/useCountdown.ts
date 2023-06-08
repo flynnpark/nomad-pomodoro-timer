@@ -13,8 +13,8 @@ function useCountdown(initialCountdown: number, finishCallback?: () => void | un
       setTime((prevTime) => {
         const now = Date.now();
         const interval = now - referenceTime;
-        setReferenceTime(now);
         const nextTime = prevTime - interval;
+        setReferenceTime(now);
 
         if (nextTime <= 0) {
           setIsRunning(false);
