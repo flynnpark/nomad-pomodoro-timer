@@ -1,11 +1,12 @@
 import { MouseEventHandler } from 'react';
 
 interface Props {
-  onClick: MouseEventHandler<HTMLButtonElement>;
+  toggleRunning: MouseEventHandler<HTMLButtonElement>;
+  isRunning: boolean;
 }
 
-function ControlButton({ onClick }: Props) {
-  return <button onClick={onClick}>Play</button>;
+function ControlButton({ toggleRunning, isRunning }: Props) {
+  return <button onClick={toggleRunning}>{isRunning ? 'Stop' : 'Play'}</button>;
 }
 
 export default ControlButton;

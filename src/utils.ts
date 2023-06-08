@@ -6,6 +6,13 @@ interface ConvertMillisecondsToMinutesAndSecondsResult {
 export const convertMillisecondsToMinutesAndSeconds = (
   milliseconds: number
 ): ConvertMillisecondsToMinutesAndSecondsResult => {
+  if (milliseconds <= 0) {
+    return {
+      minutes: 0,
+      seconds: 0,
+    };
+  }
+
   let minutes = Math.floor(milliseconds / 60000); // 1분 = 60,000밀리초
   let seconds = (milliseconds % 60000) / 1000; // 1초 = 1,000밀리초
 
@@ -16,8 +23,8 @@ export const convertMillisecondsToMinutesAndSeconds = (
   }
 
   return {
-    minutes: Math.floor(minutes),
-    seconds: Math.floor(seconds),
+    minutes: Math.ceil(minutes),
+    seconds: Math.ceil(seconds),
   };
 };
 

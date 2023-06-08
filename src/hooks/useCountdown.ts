@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 
-import { INTERVAL_IN_MILISECONDS } from '../constants';
+import { INTERVAL_IN_MILLISECONDS } from '../constants';
 
-function useCountdown(initialCountdown: number) {
+function useCountdown(initialCountdown: number, finishCallback?: () => void | undefined) {
   const [time, setTime] = useState(initialCountdown);
   const [referenceTime, setReferenceTime] = useState(Date.now());
   const [isRunning, setIsRunning] = useState(false);
@@ -11,23 +11,26 @@ function useCountdown(initialCountdown: number) {
   useEffect(() => {
     const countDownUntilZero = () => {
       setTime((prevTime) => {
-        if (prevTime <= 0) {
-          return 0;
-        }
-
         const now = Date.now();
         const interval = now - referenceTime;
         setReferenceTime(now);
-        return prevTime - interval;
+        const nextTime = prevTime - interval;
+
+        if (nextTime <= 0) {
+          setIsRunning(false);
+          finishCallback?.();
+          return initialCountdown;
+        }
+
+        return nextTime;
       });
     };
 
     if (isRunning) {
-      timerRef.current = setTimeout(countDownUntilZero, INTERVAL_IN_MILISECONDS);
+      timerRef.current = setTimeout(countDownUntilZero, INTERVAL_IN_MILLISECONDS);
     }
-
     return () => clearTimeout(timerRef.current);
-  }, [isRunning, referenceTime, time]);
+  }, [finishCallback, initialCountdown, isRunning, referenceTime, time]);
 
   const toggleRunning = () => {
     if (isRunning) {
@@ -39,7 +42,7 @@ function useCountdown(initialCountdown: number) {
     }
   };
 
-  return { time, toggleRunning };
+  return { time, toggleRunning, isRunning };
 }
 
 export default useCountdown;
