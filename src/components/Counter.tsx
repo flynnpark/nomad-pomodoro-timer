@@ -8,7 +8,8 @@ const CounterWrapper = styled.div`
 `;
 
 const StatusWrapper = styled.span`
-  color: rgba(255, 255, 255, 0.6);
+  color: ${(props) => props.theme.secondaryColor};
+  opacity: 0.6;
 `;
 
 const LabelWrapper = styled.span`
