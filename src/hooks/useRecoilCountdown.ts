@@ -4,50 +4,51 @@ import { useRecoilState, useResetRecoilState } from 'recoil';
 import { INTERVAL_IN_MILLISECONDS } from '../constants';
 import { countdownStuffState, timeState } from '../states/atom';
 
-function useRecoilCountdown() {
+function useRecoilCountdown(callback?: () => void) {
   const [time, setTime] = useRecoilState(timeState);
-  const resetTime = useResetRecoilState(timeState)
-  const [countStuff, setCountdownStuff] = useRecoilState(countdownStuffState);
+  const resetTime = useResetRecoilState(timeState);
+  const [countdownStuff, setCountdownStuff] = useRecoilState(countdownStuffState);
   const timerRef = useRef<number>();
 
   useEffect(() => {
     const countdownUntilZero = () => {
       const now = Date.now();
-      const interval = now - countStuff.referenceTime;
+      const interval = now - countdownStuff.referenceTime;
       const nextTime = time - interval;
 
       if (nextTime <= 0) {
         setCountdownStuff({
-          ...countStuff,
+          ...countdownStuff,
           referenceTime: now,
           isRunning: false,
         });
         resetTime();
+        callback?.();
       } else {
         setCountdownStuff({
-          ...countStuff,
+          ...countdownStuff,
           referenceTime: now,
         });
         setTime(nextTime);
       }
     };
 
-    if (countStuff.isRunning) {
+    if (countdownStuff.isRunning) {
       timerRef.current = setTimeout(countdownUntilZero, INTERVAL_IN_MILLISECONDS);
     }
 
     return () => clearTimeout(timerRef.current);
-  }, [countStuff, resetTime, setCountdownStuff, setTime, time]);
+  }, [callback, countdownStuff, resetTime, setCountdownStuff, setTime, time]);
 
   const toggle = () => {
-    if (countStuff.isRunning) {
+    if (countdownStuff.isRunning) {
       setCountdownStuff((prev) => ({ ...prev, isRunning: false }));
     } else {
       setCountdownStuff((prev) => ({ ...prev, referenceTime: Date.now(), isRunning: true }));
     }
   };
 
-  return { time, toggle };
+  return { time, toggle, isRunning: countdownStuff.isRunning };
 }
 
 export default useRecoilCountdown;

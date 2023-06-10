@@ -14,3 +14,13 @@ export const countdownStuffState = atom({
     isRunning: false,
   },
 });
+
+export const roundState = atom({
+  key: 'round',
+  default: 0,
+});
+
+export const goalState = atom({
+  key: 'goal',
+  default: 0,
+});

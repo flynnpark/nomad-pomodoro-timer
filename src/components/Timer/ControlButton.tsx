@@ -2,7 +2,7 @@ import { motion } from 'framer-motion';
 import { MouseEventHandler } from 'react';
 import styled from 'styled-components';
 
-import { PauseIcon, PlayIcon } from './icons';
+import { PauseIcon, PlayIcon } from '../icons';
 
 const Button = styled(motion.button)`
   display: flex;
@@ -18,14 +18,14 @@ const Button = styled(motion.button)`
 `;
 
 interface Props {
-  toggleRunning: MouseEventHandler<HTMLButtonElement>;
+  toggle: MouseEventHandler<HTMLButtonElement>;
   isRunning: boolean;
 }
 
-function ControlButton({ toggleRunning, isRunning }: Props) {
+function ControlButton({ toggle, isRunning }: Props) {
   return (
     <Button
-      onClick={toggleRunning}
+      onClick={toggle}
       whileHover={{ scale: 1.2, transition: { duration: 0.2 } }}
       whileTap={{
         scale: 0.8,
