@@ -7,4 +7,5 @@ const faviconPlugin = process.env.NODE_ENV == 'production' ? vitePluginFaviconsI
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react(), faviconPlugin],
+  base: '/nomad-pomodoro-timer/',
 });
