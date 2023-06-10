@@ -1,2 +1,2 @@
-export { default as useCountdown } from './useCountdown';
-export { default as useCounter } from './useCounter';
+export { default as useRecoilCountdown } from './useRecoilCountdown';
+export { default as useRecoilCounter } from './useRecoilCounter';

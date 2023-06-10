@@ -1,8 +1,7 @@
 import styled from 'styled-components';
 
 import { GOAL_LIMIT, ROUND_LIMIT } from '../../constants';
-import useRecoilCountdown from '../../hooks/useRecoilCountdown';
-import useRecoilCounter from '../../hooks/useRecoilCounter';
+import { useRecoilCountdown, useRecoilCounter } from '../../hooks';
 import { goalState, roundState } from '../../states/atom';
 import { convertMillisecondsToMinutesAndSeconds } from '../../utils';
 import ControlButton from './ControlButton';
