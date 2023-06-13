@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-import { GOAL_LIMIT, ROUND_LIMIT } from '../../constants';
 import { useRecoilCountdown, useRecoilCounter } from '../../hooks';
-import { goalState, roundState } from '../../states/atom';
 import { convertMillisecondsToMinutesAndSeconds } from '../../utils';
 import ControlButton from './ControlButton';
 import TimerNumber from './TimerNumber';
@@ -31,9 +29,8 @@ const BottomSection = styled.div`
 `;
 
 function Timer() {
-  const { increment: goalIncrement } = useRecoilCounter(goalState, GOAL_LIMIT);
-  const { increment: roundIncrement } = useRecoilCounter(roundState, ROUND_LIMIT, goalIncrement);
-  const { time, toggle, isRunning } = useRecoilCountdown(roundIncrement);
+  const { countdownCallback } = useRecoilCounter();
+  const { time, toggle, isRunning } = useRecoilCountdown(countdownCallback);
   const { minutes, seconds } = convertMillisecondsToMinutesAndSeconds(time);
 
   return (

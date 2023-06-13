@@ -15,12 +15,10 @@ export const countdownStuffState = atom({
   },
 });
 
-export const roundState = atom({
-  key: 'round',
-  default: 0,
-});
-
-export const goalState = atom({
-  key: 'goal',
-  default: 0,
+export const counterState = atom({
+  key: 'status',
+  default: {
+    round: 0,
+    goal: 0,
+  },
 });

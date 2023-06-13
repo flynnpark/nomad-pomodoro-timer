@@ -1,20 +1,24 @@
-import { type RecoilState, useRecoilState } from 'recoil';
+import { useRecoilCallback, useSetRecoilState } from 'recoil';
 
-function useRecoilCounter(recoilState: RecoilState<number>, limit: number, callback?: () => void) {
-  const [count, setCount] = useRecoilState(recoilState);
+import { GOAL_LIMIT, ROUND_LIMIT } from '../constants';
+import { counterState } from '../states/atom';
 
-  const increment = () => {
-    const nextCount = (count + 1) % limit;
-    if (nextCount === 0) {
-      callback?.();
+function useRecoilCounter() {
+  const setCounter = useSetRecoilState(counterState);
+  const countdownCallback = useRecoilCallback(({ snapshot }) => async () => {
+    const currentStatus = await snapshot.getPromise(counterState);
+    const nextStatus = { ...currentStatus };
+
+    nextStatus.round = (currentStatus.round + 1) % ROUND_LIMIT;
+
+    if (nextStatus.round === 0) {
+      const nextGoal = (currentStatus.goal + 1) % GOAL_LIMIT;
+      nextStatus.goal = nextGoal;
     }
-    setCount(nextCount);
-  };
+    setCounter(nextStatus);
+  });
 
-  return {
-    count,
-    increment,
-  };
+  return { countdownCallback };
 }
 
 export default useRecoilCounter;

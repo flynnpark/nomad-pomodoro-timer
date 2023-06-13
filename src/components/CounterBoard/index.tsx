@@ -1,17 +1,16 @@
 import { useRecoilValue } from 'recoil';
 
 import { GOAL_LIMIT, ROUND_LIMIT } from '../../constants';
-import { goalState, roundState } from '../../states/atom';
+import { counterState } from '../../states/atom';
 import Counter from './Counter';
 
 function CounterBoard() {
-  const roundCount = useRecoilValue(roundState);
-  const goalCount = useRecoilValue(goalState);
+  const status = useRecoilValue(counterState);
 
   return (
     <>
-      <Counter label="Round" current={roundCount} limit={ROUND_LIMIT} />
-      <Counter label="Goal" current={goalCount} limit={GOAL_LIMIT} />
+      <Counter label="Round" current={status.round} limit={ROUND_LIMIT} />
+      <Counter label="Goal" current={status.goal} limit={GOAL_LIMIT} />
     </>
   );
 }
