@@ -1,3 +1,5 @@
+import { MINUTE, SECOND } from "./constants";
+
 interface ConvertMillisecondsToMinutesAndSecondsResult {
   minutes: number;
   seconds: number;
@@ -13,10 +15,9 @@ export const convertMillisecondsToMinutesAndSeconds = (
     };
   }
 
-  let minutes = Math.floor(milliseconds / 60000); // 1분 = 60,000밀리초
-  let seconds = Math.ceil((milliseconds % 60000) / 1000); // 1초 = 1,000밀리초
+  let minutes = Math.floor(milliseconds / MINUTE); 
+  let seconds = Math.ceil((milliseconds % MINUTE) / SECOND); 
 
-  // 초가 60보다 크거나 같을 경우 분에 1을 더하고 초를 조정
   if (seconds >= 60) {
     seconds = 0;
     minutes++;
